@@ -35,10 +35,14 @@ roman-empire-project/
 ## How to run the project
 
 ## Backend
+```text
 cd backend
 mvn spring-boot:run
+```
 
 ## Frontend
+```text
 cd react-frontend
 npm install
 npm run dev
+```
