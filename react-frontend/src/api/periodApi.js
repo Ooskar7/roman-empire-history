@@ -1,6 +1,8 @@
-const PERIODS_BASE_URL = "http://localhost:8080/api/periods";
-const EVENTS_BASE_URL = "http://localhost:8080/api/events";
-const FIGURES_BASE_URL = "http://localhost:8080/api/figures";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const PERIODS_BASE_URL = `${API_BASE_URL}/periods`;
+const EVENTS_BASE_URL = `${API_BASE_URL}/events`;
+const FIGURES_BASE_URL = `${API_BASE_URL}/figures`;
 
 export async function getAllPeriods() {
   const response = await fetch(PERIODS_BASE_URL);

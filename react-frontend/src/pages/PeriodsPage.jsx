@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import PeriodCard from "../components/PeriodCard";
 import EventCard from "../components/EventCard";
+import FigureCard from "../components/FigureCard";
 import LoadingMessage from "../components/LoadingMessage";
 import ErrorMessage from "../components/ErrorMessage";
-import { getAllPeriods, getAllEvents } from "../api/periodApi";
+import { getAllPeriods, getAllEvents, getAllFigures } from "../api/periodApi";
 
 function PeriodsPage() {
   const [periods, setPeriods] = useState([]);
@@ -17,17 +18,20 @@ function PeriodsPage() {
   const [selectedGovernmentType, setSelectedGovernmentType] = useState("all");
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [selectedYearRange, setSelectedYearRange] = useState("all");
+  const [figures, setFigures] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [periodsData, eventsData] = await Promise.all([
+        const [periodsData, eventsData, figuresData] = await Promise.all([
           getAllPeriods(),
           getAllEvents(),
+          getAllFigures(),
         ]);
 
         setPeriods(periodsData);
         setEvents(eventsData);
+        setFigures(figuresData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -95,6 +99,23 @@ function PeriodsPage() {
         })
         .filter((event) => event.score > 0)
         .sort((a, b) => b.score - a.score || a.year - b.year)
+    : [];
+
+  const matchedFigures = hasSearch
+    ? figures
+        .map((figure) => {
+          const relatedPeriod = periods.find(
+            (period) => period.id === figure.periodId
+          );
+
+          return {
+            ...figure,
+            relatedPeriod,
+            score: getFigureSearchScore(figure, relatedPeriod, normalizedSearch),
+          };
+        })
+        .filter((figure) => figure.score > 0)
+        .sort((a, b) => b.score - a.score || a.birthYear - b.birthYear)
     : [];
 
   return (
@@ -185,7 +206,7 @@ function PeriodsPage() {
           <div className="results-summary">
             <p className="results-info">
               {hasSearch
-                ? `Found ${matchedPeriods.length} matching periods and ${matchedEvents.length} matching events`
+                ? `Found ${matchedPeriods.length} matching periods, ${matchedEvents.length} matching events and ${matchedFigures.length} matching figures`
                 : `Showing ${matchedPeriods.length} periods`}
             </p>
           </div>
@@ -222,6 +243,29 @@ function PeriodsPage() {
                       {event.relatedPeriod && (
                         <p className="related-period-text">
                           <strong>Period:</strong> {event.relatedPeriod.name}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
+
+          {hasSearch && (
+            <section className="results-section">
+              <h2>Matching Figures</h2>
+
+              {matchedFigures.length === 0 ? (
+                <p>No figures match your current search and filters.</p>
+              ) : (
+                <div className="cards-container">
+                  {matchedFigures.map((figure) => (
+                    <div key={figure.id} className="event-search-wrapper">
+                      <FigureCard figure={figure} searchTerm={searchTerm} />
+                      {figure.relatedPeriod && (
+                        <p className="related-period-text">
+                          <strong>Period:</strong> {figure.relatedPeriod.name}
                         </p>
                       )}
                     </div>
@@ -285,6 +329,33 @@ function getEventSearchScore(event, relatedPeriod, query) {
   if (longDescription.includes(query)) score += 15;
   if (periodName.includes(query)) score += 20;
   if (year.includes(query)) score += 20;
+
+  return score;
+}
+
+function getFigureSearchScore(figure, relatedPeriod, query) {
+  if (!query) return 0;
+
+  let score = 0;
+
+  const name = figure.name.toLowerCase();
+  const role = figure.role.toLowerCase();
+  const shortDescription = figure.shortDescription.toLowerCase();
+  const longDescription = figure.longDescription.toLowerCase();
+  const birthYear = String(figure.birthYear);
+  const deathYear = String(figure.deathYear);
+  const periodName = relatedPeriod ? relatedPeriod.name.toLowerCase() : "";
+
+  if (name === query) score += 100;
+  if (name.includes(query)) score += 80;
+
+  if (role.includes(query)) score += 40;
+  if (shortDescription.includes(query)) score += 25;
+  if (longDescription.includes(query)) score += 15;
+
+  if (periodName.includes(query)) score += 20;
+  if (birthYear.includes(query)) score += 15;
+  if (deathYear.includes(query)) score += 15;
 
   return score;
 }
