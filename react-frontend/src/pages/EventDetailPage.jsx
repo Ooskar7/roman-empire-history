@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import Layout from "../components/Layout";
 import LoadingMessage from "../components/LoadingMessage";
 import ErrorMessage from "../components/ErrorMessage";
@@ -11,16 +12,19 @@ function EventDetailPage() {
 
   const [event, setEvent] = useState(null);
   const [period, setPeriod] = useState(null);
+  const [markdownContent, setMarkdownContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchEventDetails() {
       try {
-        const eventData = await getEventById(id);
-        setEvent(eventData);
+        const eventResponse = await getEventById(id);
 
-        const periodData = await getPeriodById(eventData.periodId);
+        setEvent(eventResponse.event);
+        setMarkdownContent(eventResponse.markdownContent);
+
+        const periodData = await getPeriodById(eventResponse.event.periodId);
         setPeriod(periodData);
       } catch (err) {
         setError(err.message);
@@ -51,33 +55,40 @@ function EventDetailPage() {
       {error && <ErrorMessage message={error} />}
 
       {!loading && !error && event && (
-        <div className="card">
-          <h2>{event.title}</h2>
+        <article className="article-card">
+          <header className="article-header">
+            <h1>{event.title}</h1>
 
-          <p>
-            <strong>Year:</strong> {formatYear(event.year)}
-          </p>
+            <div className="article-meta">
+              <span>{formatYear(event.year)}</span>
+              <span>{event.location}</span>
+              {period && <span>{period.name}</span>}
+            </div>
 
-          <p>
-            <strong>Location:</strong> {event.location}
-          </p>
+            {event.imageUrl && (
+              <img
+                src={event.imageUrl}
+                alt={event.title}
+                className="article-hero-image"
+              />
+            )}
+          </header>
 
-          {period && (
-            <p>
-              <strong>Historical Period:</strong> {period.name}
-            </p>
-          )}
-
-          {event.imageUrl && (
-            <img
-              src={event.imageUrl}
-              alt={event.title}
-              className="detail-image"
-            />
-          )}
-
-          <p>{event.longDescription}</p>
-        </div>
+          <div className="markdown-article">
+            <ReactMarkdown
+              components={{
+                img: (props) => (
+                  <img {...props} className="markdown-image" loading="lazy" />
+                ),
+                a: (props) => (
+                  <a {...props} target="_blank" rel="noreferrer" />
+                ),
+              }}
+            >
+              {markdownContent}
+            </ReactMarkdown>
+          </div>
+        </article>
       )}
     </Layout>
   );

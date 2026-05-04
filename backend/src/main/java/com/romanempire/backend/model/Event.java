@@ -8,10 +8,12 @@ public class Event {
     private String longDescription;
     private String location;
     private String imageUrl;
+    private String contentFile;
     private Long periodId;
 
     public Event(Long id, String title, int year, String shortDescription,
-                 String longDescription, String location, String imageUrl, Long periodId) {
+                 String longDescription, String location, String imageUrl,
+                 String contentFile, Long periodId) {
         this.id = id;
         this.title = title;
         this.year = year;
@@ -19,6 +21,7 @@ public class Event {
         this.longDescription = longDescription;
         this.location = location;
         this.imageUrl = imageUrl;
+        this.contentFile = contentFile;
         this.periodId = periodId;
     }
 
@@ -48,6 +51,10 @@ public class Event {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getContentFile() {
+        return contentFile;
     }
 
     public Long getPeriodId() {

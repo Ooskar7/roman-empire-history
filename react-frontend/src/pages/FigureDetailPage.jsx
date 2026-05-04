@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import Layout from "../components/Layout";
 import LoadingMessage from "../components/LoadingMessage";
 import ErrorMessage from "../components/ErrorMessage";
@@ -11,26 +12,30 @@ function FigureDetailPage() {
 
   const [figure, setFigure] = useState(null);
   const [period, setPeriod] = useState(null);
+  const [markdownContent, setMarkdownContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function fetchFigureDetails() {
-      try {
-        const figureData = await getFigureById(id);
-        setFigure(figureData);
+    useEffect(() => {
+      async function fetchFigureDetails() {
+        try {
+          const figureResponse = await getFigureById(id);
 
-        const periodData = await getPeriodById(figureData.periodId);
-        setPeriod(periodData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+          setFigure(figureResponse.figure);
+          setMarkdownContent(figureResponse.markdownContent);
+
+
+          const periodData = await getPeriodById(figureResponse.figure.periodId);
+          setPeriod(periodData);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
       }
-    }
 
-    fetchFigureDetails();
-  }, [id]);
+      fetchFigureDetails();
+    }, [id]);
 
   return (
     <Layout
@@ -51,34 +56,39 @@ function FigureDetailPage() {
       {error && <ErrorMessage message={error} />}
 
       {!loading && !error && figure && (
-        <div className="card">
-          <h2>{figure.name}</h2>
+        <article className="article-card">
+          <header className="article-header">
+            <h1>{figure.name}</h1>
 
-          <p>
-            <strong>Years:</strong>{" "}
-            {formatYearRange(figure.birthYear, figure.deathYear)}
-          </p>
+            <div className="article-meta">
+              <span>{formatYearRange(figure.birthYear, figure.deathYear)}</span>
+              {period && <span>{period.name}</span>}
+            </div>
 
-          <p>
-            <strong>Role:</strong> {figure.role}
-          </p>
+            {figure.imageUrl && (
+              <img
+                src={figure.imageUrl}
+                alt={figure.name}
+                className="article-hero-image"
+              />
+            )}
+          </header>
 
-          {period && (
-            <p>
-              <strong>Historical Period:</strong> {period.name}
-            </p>
-          )}
-
-          {figure.imageUrl && (
-            <img
-              src={figure.imageUrl}
-              alt={figure.name}
-              className="figure-image"
-            />
-          )}
-
-          <p>{figure.longDescription}</p>
-        </div>
+          <div className="markdown-article">
+            <ReactMarkdown
+              components={{
+                img: (props) => (
+                  <img {...props} className="markdown-image" loading="lazy" />
+                ),
+                a: (props) => (
+                  <a {...props} target="_blank" rel="noreferrer" />
+                ),
+              }}
+            >
+              {markdownContent}
+            </ReactMarkdown>
+          </div>
+        </article>
       )}
     </Layout>
   );

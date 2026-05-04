@@ -19,6 +19,7 @@ public class EventService {
                     "According to Roman tradition, the city of Rome was founded in 753 BC by Romulus, who became its first king. The story of Romulus and Remus became one of the central foundation myths of Roman identity and political culture.",
                     "Rome",
                     "/images/events/founding_of_rome.png",
+                    "content/events/founding-of-rome.md",
                     1L
             ),
             new Event(
@@ -29,6 +30,7 @@ public class EventService {
                     "The expulsion of the last Roman king, Tarquinius Superbus, traditionally marked the end of the Roman Monarchy and the beginning of the Roman Republic. This event became a foundational political memory for the Romans, who strongly associated kingship with tyranny afterward.",
                     "Rome",
                     "/images/events/expulsion_of_the_kings.png",
+                    "content/events/expulsion-of-the-kings.md",
                     1L
             ),
             new Event(
@@ -39,6 +41,7 @@ public class EventService {
                     "The Twelve Tables were an early codification of Roman law, traditionally created in the mid-5th century BC. They were significant because they made important legal rules more visible and stable, reducing arbitrary interpretation by elites.",
                     "Rome",
                     "/images/events/twelve_tables.png",
+                    "content/events/twelve-tables.md",
                     2L
             ),
             new Event(
@@ -49,6 +52,7 @@ public class EventService {
                     "Julius Caesar was assassinated on the Ides of March in 44 BC by a group of senators who feared his growing power. The assassination did not restore the Republic as the conspirators hoped; instead, it accelerated the conflicts that led to the rise of Augustus and the Roman Empire.",
                     "Rome",
                     "/images/events/assassination_julius_caesar.jpg",
+                    "content/events/assassination-of-julius-caesar.md",
                     2L
             ),
             new Event(
@@ -59,6 +63,7 @@ public class EventService {
                     "In 27 BC, Octavian received the title Augustus, a turning point traditionally seen as the beginning of the Roman Empire. Although republican institutions formally continued, political power became increasingly concentrated in the hands of the emperor.",
                     "Rome",
                     "/images/events/augustus_rule.png",
+                    "content/events/beginning-of-the-empire.md",
                     3L
             ),
             new Event(
@@ -69,6 +74,7 @@ public class EventService {
                     "In AD 476, the deposition of Romulus Augustulus by Odoacer is traditionally used to mark the fall of the Western Roman Empire. Although the Eastern Roman Empire continued for many centuries, this event became a major symbolic dividing line in European history.",
                     "Ravenna",
                     "/images/events/fall_roman_empire.jpg",
+                    "content/events/fall-of-western-empire.md",
                     3L
             )
     );

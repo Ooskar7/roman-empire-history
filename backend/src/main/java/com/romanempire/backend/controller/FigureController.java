@@ -1,7 +1,9 @@
 package com.romanempire.backend.controller;
 
+import com.romanempire.backend.dto.FigureDetailResponse;
 import com.romanempire.backend.model.Figure;
 import com.romanempire.backend.service.FigureService;
+import com.romanempire.backend.service.MarkdownService;
 import com.romanempire.backend.service.PeriodService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +15,16 @@ public class FigureController {
 
     private final FigureService figureService;
     private final PeriodService periodService;
+    private final MarkdownService markdownService;
 
-    public FigureController(FigureService figureService, PeriodService periodService) {
+    public FigureController(
+            FigureService figureService,
+            PeriodService periodService,
+            MarkdownService markdownService
+    ) {
         this.figureService = figureService;
         this.periodService = periodService;
+        this.markdownService = markdownService;
     }
 
     @GetMapping("/api/figures")
@@ -25,8 +33,11 @@ public class FigureController {
     }
 
     @GetMapping("/api/figures/{id}")
-    public Figure getFigureById(@PathVariable Long id) {
-        return figureService.getFigureById(id);
+    public FigureDetailResponse getFigureById(@PathVariable Long id) {
+        Figure figure = figureService.getFigureById(id);
+        String markdownContent = markdownService.readMarkdownFile(figure.getContentFile());
+
+        return new FigureDetailResponse(figure, markdownContent);
     }
 
     @GetMapping("/api/periods/{id}/figures")

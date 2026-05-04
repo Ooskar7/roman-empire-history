@@ -9,11 +9,12 @@ public class Figure {
     private String shortDescription;
     private String longDescription;
     private String imageUrl;
+    private String contentFile;
     private Long periodId;
 
     public Figure(Long id, String name, Integer birthYear, Integer deathYear,
                   String role, String shortDescription, String longDescription,
-                  String imageUrl, Long periodId) {
+                  String imageUrl, String contentFile, Long periodId) {
         this.id = id;
         this.name = name;
         this.birthYear = birthYear;
@@ -22,6 +23,7 @@ public class Figure {
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.imageUrl = imageUrl;
+        this.contentFile = contentFile;
         this.periodId = periodId;
     }
 
@@ -55,6 +57,10 @@ public class Figure {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getContentFile() {
+        return contentFile;
     }
 
     public Long getPeriodId() {
