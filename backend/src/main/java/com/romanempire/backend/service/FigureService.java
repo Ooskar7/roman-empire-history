@@ -68,7 +68,7 @@ public class FigureService {
                     "A major emperor associated with Christianity and imperial transformation.",
                     "Constantine I, also known as Constantine the Great, was a Roman emperor whose reign had profound consequences for the empire. He is especially known for his association with the legalization of Christianity and for founding Constantinople, which became a major imperial center.",
                     "/images/figures/constantine_I.jpg",
-                    "content/figures/constantine.md",
+                    "content/figures/constantine-I.md",
                     3L
             )
     );
