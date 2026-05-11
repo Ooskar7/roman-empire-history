@@ -122,6 +122,7 @@ function PeriodsPage() {
     <Layout
       title="Roman Periods and Events"
       subtitle="Search across the main periods of Roman history and their important events."
+      backgroundImage="/images/backgrounds/map_117ad_background.png"
     >
       <Link to="/" className="button-link secondary-button">
         Back to Home

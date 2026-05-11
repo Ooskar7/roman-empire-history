@@ -6,7 +6,6 @@ import com.romanempire.backend.service.EventService;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
-import org.yaml.snakeyaml.error.Mark;
 
 import com.romanempire.backend.dto.EventDetailResponse;
 import com.romanempire.backend.service.MarkdownService;

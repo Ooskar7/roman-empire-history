@@ -41,6 +41,7 @@ function FigureDetailPage() {
     <Layout
       title="Roman Figure Detail"
       subtitle="Discover an important person in Roman history."
+      backgroundImage="/images/backgrounds/map_117ad_background.png"
     >
       <Link to="/periods" className="button-link secondary-button">
         Back to Periods

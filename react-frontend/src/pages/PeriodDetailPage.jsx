@@ -58,6 +58,7 @@ function PeriodDetailPage() {
     <Layout
       title="Roman Period Detail"
       subtitle="Learn more about a specific historical period of ancient Rome."
+      backgroundImage="/images/backgrounds/map_117ad_background.png"
     >
       <Link to="/periods" className="button-link secondary-button">
         Back to Periods

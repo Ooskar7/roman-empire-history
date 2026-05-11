@@ -6,6 +6,7 @@ function HomePage() {
     <Layout
       title="Roman Empire History"
       subtitle="Explore the history of Rome from the Monarchy to the Empire."
+      backgroundImage="/images/backgrounds/map_117ad_background.png"
     >
       <div className="card">
         <h2>Welcome</h2>

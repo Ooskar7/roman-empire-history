@@ -40,6 +40,7 @@ function EventDetailPage() {
     <Layout
       title="Roman Event Detail"
       subtitle="Discover an important event in Roman history."
+      backgroundImage="/images/backgrounds/map_117ad_background.png"
     >
       <Link to="/periods" className="button-link secondary-button">
         Back to Periods
