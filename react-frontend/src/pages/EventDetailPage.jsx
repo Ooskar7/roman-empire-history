@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import Layout from "../components/Layout";
 import LoadingMessage from "../components/LoadingMessage";
 import ErrorMessage from "../components/ErrorMessage";
+import ClickableImage from "../components/ClickableImage";
 import { formatYear } from "../utils/formatters";
 import { getEventById, getPeriodById } from "../api/periodApi";
 
@@ -67,10 +68,10 @@ function EventDetailPage() {
             </div>
 
             {event.imageUrl && (
-              <img
+              <ClickableImage
                 src={event.imageUrl}
                 alt={event.title}
-                className="article-hero-image"
+                imageClassName="article-hero-image"
               />
             )}
           </header>
@@ -79,7 +80,12 @@ function EventDetailPage() {
             <ReactMarkdown
               components={{
                 img: (props) => (
-                  <img {...props} className="markdown-image" loading="lazy" />
+                  <ClickableImage
+                    {...props}
+                    alt={props.alt || "Article image"}
+                    imageClassName="markdown-image"
+                    loading="lazy"
+                  />
                 ),
                 a: (props) => (
                   <a {...props} target="_blank" rel="noreferrer" />

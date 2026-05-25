@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ClickableImage from "./ClickableImage";
 import { formatYearRange } from "../utils/formatters";
 import { highlightText } from "../utils/highlightText";
 
@@ -8,10 +9,10 @@ function FigureCard({ figure, searchTerm = "" }) {
       <h3>{highlightText(figure.name, searchTerm)}</h3>
 
       {figure.imageUrl && (
-        <img
+        <ClickableImage
           src={figure.imageUrl}
           alt={figure.name}
-          className="card-image"
+          imageClassName="card-image"
         />
       )}
 
