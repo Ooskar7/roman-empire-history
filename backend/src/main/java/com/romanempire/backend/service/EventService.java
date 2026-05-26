@@ -29,7 +29,7 @@ public class EventService {
                     "According to tradition, Rome was founded by Romulus.",
                     "According to Roman tradition, the city of Rome was founded in 753 BC by Romulus, who became its first king. The story of Romulus and Remus became one of the central foundation myths of Roman identity and political culture.",
                     "Rome",
-                    "/images/events/monarchy/founding_of_rome.png",
+                    "/images/events/monarchy/founding-of-rome.png",
                     "content/events/monarchy/founding-of-rome.md",
                     1L
             ),
