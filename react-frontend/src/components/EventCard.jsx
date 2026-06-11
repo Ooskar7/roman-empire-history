@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ClickableImage from "./ClickableImage";
 import { formatYear } from "../utils/formatters";
 import { highlightText } from "../utils/highlightText";
 
@@ -8,10 +9,10 @@ function EventCard({ event, searchTerm = "" }) {
       <h3>{highlightText(event.title, searchTerm)}</h3>
 
       {event.imageUrl && (
-        <img
+        <ClickableImage
           src={event.imageUrl}
           alt={event.title}
-          className="card-image"
+          imageClassName="card-image"
         />
       )}
 
