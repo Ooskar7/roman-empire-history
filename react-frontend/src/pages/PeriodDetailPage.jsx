@@ -5,6 +5,7 @@ import EventCard from "../components/EventCard";
 import FigureCard from "../components/FigureCard";
 import LoadingMessage from "../components/LoadingMessage";
 import ErrorMessage from "../components/ErrorMessage";
+import ArticleRenderer from "../components/ArticleRenderer";
 import { formatYear } from "../utils/formatters";
 import {
   getPeriodById,
@@ -84,7 +85,7 @@ function PeriodDetailPage() {
             <p>
               <strong>Key Figure:</strong> {period.keyFigure}
             </p>
-            <p>{period.description}</p>
+            <ArticleRenderer content={period.description} currentPath={`/period/${id}`} />
           </div>
 
           <section className="events-section">
