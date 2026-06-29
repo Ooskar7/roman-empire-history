@@ -388,6 +388,15 @@ body.lightbox-open {
 .markdown-article a {
   color: #7a3f22;
   font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.markdown-article a:hover,
+.markdown-article a:focus-visible {
+  color: #a24f1f;
 }
 
 .markdown-image {

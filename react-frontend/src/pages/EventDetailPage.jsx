@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
 import Layout from "../components/Layout";
 import LoadingMessage from "../components/LoadingMessage";
 import ErrorMessage from "../components/ErrorMessage";
 import ClickableImage from "../components/ClickableImage";
+import ArticleRenderer from "../components/ArticleRenderer";
 import { formatYear } from "../utils/formatters";
 import { getEventById, getPeriodById } from "../api/periodApi";
 
@@ -76,25 +76,7 @@ function EventDetailPage() {
             )}
           </header>
 
-          <div className="markdown-article">
-            <ReactMarkdown
-              components={{
-                img: (props) => (
-                  <ClickableImage
-                    {...props}
-                    alt={props.alt || "Article image"}
-                    imageClassName="markdown-image"
-                    loading="lazy"
-                  />
-                ),
-                a: (props) => (
-                  <a {...props} target="_blank" rel="noreferrer" />
-                ),
-              }}
-            >
-              {markdownContent}
-            </ReactMarkdown>
-          </div>
+          <ArticleRenderer content={markdownContent} currentPath={`/event/${id}`} />
         </article>
       )}
     </Layout>
