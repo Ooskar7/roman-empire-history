@@ -14,7 +14,11 @@ export function autoLinkContent(content, currentPath = "", registry = linkRegist
 }
 
 function findEntityMatches(content, registry, currentPath, protectedRanges) {
-  const entities = registry.filter((entity) => entity.path !== currentPath);
+  const existingLinkedPaths = getExistingMarkdownLinkPaths(content);
+  const entities = registry.filter(
+    (entity) =>
+      entity.path !== currentPath && !existingLinkedPaths.has(entity.path),
+  );
 
   const entityMatches = entities
     .map((entity) => findFirstEntityMatch(content, entity, protectedRanges))
@@ -89,10 +93,48 @@ function getProtectedMarkdownRanges(content) {
   const ranges = [
     ...findRegexRanges(content, /```[\s\S]*?```/g),
     ...findRegexRanges(content, /`[^`\n]+`/g),
+    ...findMarkdownHeadingRanges(content),
     ...findRegexRanges(content, /!?\[[^\]\n]*]\([^)\n]+?\)/g),
   ];
 
   return ranges.sort((a, b) => a.start - b.start);
+}
+
+function getExistingMarkdownLinkPaths(content) {
+  const paths = new Set();
+  const codeRanges = [
+    ...findRegexRanges(content, /```[\s\S]*?```/g),
+    ...findRegexRanges(content, /`[^`\n]+`/g),
+  ];
+  const linkPattern = /!?\[[^\]\n]*]\(([^)\n]+?)\)/g;
+  let match;
+
+  while ((match = linkPattern.exec(content)) !== null) {
+    const start = match.index;
+    const end = start + match[0].length;
+    const isImage = match[0].startsWith("!");
+
+    if (!isImage && !overlapsAnyRange(start, end, codeRanges)) {
+      paths.add(match[1]);
+    }
+  }
+
+  return paths;
+}
+
+function findMarkdownHeadingRanges(content) {
+  const ranges = [];
+  const headingPattern = /^(?: {0,3})#{1,6}\s.+$/gm;
+  let match;
+
+  while ((match = headingPattern.exec(content)) !== null) {
+    ranges.push({
+      start: match.index,
+      end: match.index + match[0].length,
+    });
+  }
+
+  return ranges;
 }
 
 function findRegexRanges(content, regex) {
