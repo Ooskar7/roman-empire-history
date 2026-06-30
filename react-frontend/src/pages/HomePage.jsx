@@ -19,6 +19,19 @@ function HomePage() {
           View Historical Periods
         </Link>
       </div>
+
+      <div className="cards-container home-feature-grid">
+        <div className="card home-feature-card">
+          <h2>Historical Political Map</h2>
+          <p>
+            Explore how Roman territory changed from the city's foundation to the
+            fall of the Western Roman Empire.
+          </p>
+          <Link to="/historical-map" className="button-link">
+            Open Historical Political Map
+          </Link>
+        </div>
+      </div>
     </Layout>
   );
 }

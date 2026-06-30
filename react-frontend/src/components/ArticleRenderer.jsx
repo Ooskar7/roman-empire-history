@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
-import ClickableImage from "./ClickableImage";
+import ExpandableImage from "./common/ExpandableImage";
 import { autoLinkContent } from "../utils/autoLinkContent";
 
 function ArticleRenderer({ content, currentPath = "" }) {
@@ -11,7 +11,7 @@ function ArticleRenderer({ content, currentPath = "" }) {
       <ReactMarkdown
         components={{
           img: (props) => (
-            <ClickableImage
+            <ExpandableImage
               {...props}
               alt={props.alt || "Article image"}
               imageClassName="markdown-image"
