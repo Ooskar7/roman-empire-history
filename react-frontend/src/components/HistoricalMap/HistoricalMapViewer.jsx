@@ -1,8 +1,10 @@
 import { useState } from "react";
+import ExpandableImage from "../common/ExpandableImage";
 
 function HistoricalMapViewer({ stage }) {
   const [failedImage, setFailedImage] = useState("");
   const imageFailed = failedImage === stage.image;
+  const imageAlt = `Historical political map of Rome in ${stage.label}: ${stage.title}`;
 
   return (
     <section className="historical-map-viewer card" aria-label="Historical map">
@@ -17,10 +19,13 @@ function HistoricalMapViewer({ stage }) {
             </p>
           </div>
         ) : (
-          <img
+          <ExpandableImage
             src={stage.image}
-            alt={`Historical political map of Rome in ${stage.label}: ${stage.title}`}
-            className="historical-map-image"
+            alt={imageAlt}
+            caption={`${stage.label} - ${stage.title}`}
+            className="historical-map-expandable"
+            imageClassName="historical-map-image"
+            hint="Click to enlarge"
             onError={() => setFailedImage(stage.image)}
           />
         )}
