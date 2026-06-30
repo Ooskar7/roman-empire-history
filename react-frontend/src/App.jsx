@@ -5,6 +5,7 @@ import PeriodsPage from "./pages/PeriodsPage";
 import PeriodDetailPage from "./pages/PeriodDetailPage";
 import EventDetailPage from "./pages/EventDetailPage";
 import FigureDetailPage from "./pages/FigureDetailPage";
+import HistoricalMapPage from "./pages/HistoricalMapPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/period/:id" element={<PeriodDetailPage />} />
         <Route path="/event/:id" element={<EventDetailPage />} />
         <Route path="/figure/:id" element={<FigureDetailPage />} />
+        <Route path="/historical-map" element={<HistoricalMapPage />} />
       </Routes>
     </Router>
   );
